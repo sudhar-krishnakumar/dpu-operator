@@ -34,6 +34,13 @@ spec:
               fieldPath: spec.nodeName
         - name: NAMESPACE
           value: {{.Namespace}}
+          #proxy.ir.intel.com->10.102.248.16
+        - name: http_proxy
+          value: http://proxy.ir.intel.com:911
+        - name: https_proxy
+          value: http://proxy.ir.intel.com:911
+        - name: no_proxy
+          value: "10.43.0.1,172.30.0.1,0.0.0.0,localhost,127.0.0.1,ir.intel.com,ger.corp.intel.com,192.168.122.1,192.168.122.103,192.168.122.105,192.168.122.141,192.168.122.142,192.168.122.143,10.55.128.163,.baremetalcluster.redhat.com,10.55.128.26,10.55.128.18,10.55.129.8,10.55.128.41,console.redhat.com,192.168.122.100,192.168.122.167,silpixa00400458,10.237.223.224,silpixa00400458.ir.intel.com,192.168.1.1,192.168.1.2"
         volumeMounts:
         - name: devicesock
           mountPath: /var/lib/kubelet/

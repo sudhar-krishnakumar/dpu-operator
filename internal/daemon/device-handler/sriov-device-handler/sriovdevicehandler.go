@@ -126,7 +126,7 @@ func (s *sriovDeviceHandler) SetupDevices() error {
 	s.vfFilterFunc = CreatePcieDevFilter("8086", "145c", "idpf")
 
 	// TODO: The VSP should pass in the PF
-	err = s.SetSriovNumVfs("0000:06:00.0", 8)
+	err = s.SetSriovNumVfs("0000:ae:00.0", 8)
 	if err != nil {
 		return fmt.Errorf("failed to set sriov numVfs: %v", err)
 	}

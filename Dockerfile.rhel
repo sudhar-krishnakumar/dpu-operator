@@ -1,7 +1,13 @@
 # Build the manager binary
-FROM registry.ci.openshift.org/ocp/builder:rhel-9-golang-1.22-openshift-4.17 AS builder
+#FROM registry.ci.openshift.org/ocp/builder:rhel-9-golang-1.22-openshift-4.17 AS builder
+#FROM golang:1.22.4-alpine@sha256:ace6cc3fe58d0c7b12303c57afe6d6724851152df55e08057b43990b927ad5e8 as builder
+#FROM --platform=${BUILDPLATFORM:-linux/arm64} golang:1.22 as builder
+FROM --platform=${BUILDPLATFORM:-$TARGETOS/$TARGETARCH} golang:1.22 as builder
 ARG TARGETOS
 ARG TARGETARCH
+RUN echo $TARGETOS
+RUN echo $TARGETARCH
+RUN ls
 
 WORKDIR /workspace
 COPY . .
@@ -15,7 +21,8 @@ RUN CGO_ENABLED=0 GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -o ma
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
-FROM registry.ci.openshift.org/ocp/4.17:base-rhel9
+#FROM registry.ci.openshift.org/ocp/4.17:base-rhel9
+FROM alpine:3@sha256:c5b1261d6d3e43071626931fc004f70149baeba2c8ec672bd4f27761f8e1ad6b
 WORKDIR /
 COPY --from=builder /workspace/manager .
 USER 65532:65532
